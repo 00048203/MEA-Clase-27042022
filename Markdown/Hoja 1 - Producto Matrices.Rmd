@@ -1,0 +1,178 @@
+---
+title: "Álgebra Lineal - Hoja 1"
+author: "Luis Edmundo Ramírez"
+date: '2022-04-18'
+output: html_document
+---
+<h2>Ejercicio 1</h2>
+<i><b>Literal a)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(3,1,-1,1),nrow = 2,ncol = 2,byrow=T)
+A
+dim(A)
+
+#Definiendo Matriz B
+B<-matrix(c(2,1,4,0,6,0),nrow = 2,ncol = 3,byrow=T)
+B
+dim(B)
+
+#Definiendo Matriz C
+C<-matrix(c(1,sqrt(2),3/2),nrow = 3,ncol = 1,byrow=T)
+C
+dim(C)
+
+#Producto de matrices AxBxC
+Producto1<-A%*%B
+dim(Producto1)
+Producto<-Producto1%*%C
+dim(Producto)
+Producto
+```
+
+<i><b>Literal b)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(2,-3),nrow = 2,ncol = 1)
+A
+dim(A)
+
+#Definiendo Matriz B
+B<-matrix(c(1,5,sqrt(37),429*pi,2,-2,1),nrow = 1,ncol = 7)
+B
+dim(B)
+
+#Definiendo Matriz C
+C<-matrix(c(3,0,0,0,1,2,6),nrow = 7,ncol = 1)
+C
+dim(C)
+
+#Producto de matrices AxBxC
+Producto1<-A%*%B
+dim(Producto1)
+Producto<-Producto1%*%C
+dim(Producto)
+Producto
+```
+
+<i><b>Literal c)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(0,1,0,2),nrow = 4,ncol = 1)
+A
+dim(A)
+
+#Definiendo Matriz B
+B<-matrix(c(5,0,1,0),nrow = 1,ncol = 4)
+B
+dim(B)
+
+#Producto de matrices AxB
+Producto<-A%*%B
+dim(Producto)
+Producto
+```
+
+<i><b>Literal d)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(1,1,1,0,0,0,-1,0,0,1,1,0,0,-1,0,-1,0,1,0,0,-1,0,-1,-1),nrow = 4,ncol = 6, byrow = T)
+A
+dim(A)
+
+
+#Definiendo Matriz B
+B<-matrix(c(0,0,-1,1,0,1,0,-1,0,-1,1,0,-1,0,0,1,1,0,-1,0,-1,1,0,0),nrow = 6,ncol = 4, byrow = T)
+B
+dim(B)
+
+#Producto de matrices AxB
+Producto<-A%*%B
+dim(Producto)
+Producto
+```
+
+<h2>Ejercicio 3</h2>
+<i><b>Literal a)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(1,0,2,3),nrow = 2 ,ncol = 2)
+A
+
+Cuadrado<-A%*%A
+Cuadrado
+
+#Ocupando operador exponencial con librería
+library(expm)
+Cuadra<-A%^%2
+Cuadra
+```
+
+<i><b>Literal b)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(1,0,2,3),nrow = 2 ,ncol = 2)
+A
+
+library(expm)
+Operacion<-3*A%^%3-(1/2)*(A)+A%^%0
+Operacion
+```
+
+<i><b>Literal c)</b></i>
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(1,0,2,3),nrow = 2 ,ncol = 2)
+A
+
+#Definiendo Matriz A Transpuesta
+tra<-t(A)
+tra
+
+
+#Definiendo matriz identidad I2
+Idos<-matrix(c(1,0,0,1), nrow = 2 ,ncol = 2)
+Idos
+
+Operacion<-((tra)%^%2) + A%*%(tra) + ((tra)%*%A) - (3*(Idos))
+Operacion
+```
+
+<h2>Ejercicio 4</h2>
+<i><b>Literal a)</b></i>
+
+```{r}
+#Definiendo Matriz A
+A<-matrix(c(1,1,-1,0,2,1/2,0,-2,-1),nrow = 3 ,ncol = 3, byrow = TRUE)
+A
+
+#Definiendo Matriz A Transpuesta
+tra2<-t(A)
+tra2
+
+#Definiendo matriz identidad I3
+Itres<-matrix(c(1,0,0,0,1,0,0,0,1), nrow = 3 ,ncol = 3)
+Itres
+
+Operacion <- A%^%2 - tra2 + Itres
+Operacion
+
+
+```
+
+<i><b>Literal b)</b></i>
+```{r}
+#Definiendo matriz 
+Imaginaria<-matrix(c((1i*1/2),(1+1i),(-2*1i),1),nrow = 2, ncol = 2,byrow = TRUE)
+Imaginaria
+
+#Definiendo matriz identidad I2
+Idos<-matrix(c(1,0,0,1), nrow = 2 ,ncol = 2)
+Idos
+
+
+Operacion <-  (1/3)*Imaginaria   + Idos
+Operacion
+```
+
+

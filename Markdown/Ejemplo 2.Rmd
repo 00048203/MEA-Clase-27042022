@@ -1,0 +1,50 @@
+---
+title: "Ejemplo 2 - Álgebra Lineal"
+author: "Luis Edmundo Ramírez"
+date: '2022-04-14'
+output: html_document
+---
+```{r}
+library(matlib)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+knitr::include_graphics("E:/metodosAvanzados/metodosAvanzados/Outputs/uca.JPG")
+```
+
+##Ejemplo de Código LATEX: Intersección de subespacios en $R^3$
+En $R^4$ sea $H_1=\{(x_1,x_2,x_3,x_4):2x_1-x_3-x_4=0\}$ y $H_2=\{(x_1,x_2,x_3,x_4):x_1-x_2+x_4=0\}$.
+Verifique que $H_1$ y $H_2$ son subespacio de $R_4$. Si es así, hallar $H_1\cap H2$.
+
+
+Se debe resolver el sistema:
+$$ \left \{ \begin{array}{lcc}
+          2x_1 - x_3 - x_4 & = & 0 \\
+          x_1 - x_2 + x_4 & = & 0
+          \end {array}
+    \right.
+    $$
+    
+}
+
+```{r}
+#Los coeficientes del Sistema genera una
+#Matriz de 4 columnas y 2 filas  y se ordena por filas
+C<-matrix(c(2,0,-1-1,1,-1,0,1), ncol = 4, nrow = 2, byrow = T)
+
+#Resultado del sistema
+v<-c(0,0)
+C
+v
+
+#Resolución
+Solve(C,v,verbose = TRUE,fractions = TRUE)
+
+```
+
+
+

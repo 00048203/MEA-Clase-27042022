@@ -1,0 +1,423 @@
+---
+title: "Clase 27-04-2022"
+author: "Luis Edmundo Ramírez"
+date: '2022-04-28'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+knitr::include_graphics('E:/metodosAvanzados/metodosAvanzados/Outputs/uca2.PNG')
+```
+
+# Maestría en Estadística Aplicada a la Investigación
+# Métodos Estadísticos Avanzados I
+
+
+## Ejemplo 1
+Manipular matrices en R
+
+```{r}
+
+# Introduciendo un vector:
+
+V=c(22,4,-8,5,9)
+V
+class(V)
+length(V)
+
+U<- c(22,4,-8,5,9)
+U
+
+V==U
+
+w<-c(1:12)
+w
+
+A<-matrix(c(1:12), nrow = 4 , ncol = 3)
+A
+dim(A)
+length(A)
+B<-matrix(c(0,2,0,3,4,3,1,5,1,0,0,1),nrow = 3,ncol= 4)
+B
+
+dim(B)
+length(B)
+
+
+A<-matrix(c(1:12), nrow = 4 , ncol = 3)
+
+B<-matrix(c(0,2,0,3,4,3,1,5,1,0,0,1),nrow = 3,ncol= 4)
+
+M<-matrix(c(0,2,0,3,4,3,1,5,1,0,0,1),nrow = 3,ncol= 4,byrow = T)
+
+
+A
+B
+
+M
+
+# Notar que la matriz A es distinta de la matriz M
+# A+B no tiene sentido porque son matrices de distinta dimensión
+dim(A)
+dim(B)
+
+dim(M)
+
+# Tiene sentido, y por lo tanto se puede realizar B+M, pues son matrices de la misma dimensión (igual número de filas e igual número de columnas)
+
+suma<-B+M
+suma
+
+
+
+# Tiene sentido el producto de la matriz A por la matriz B, notar que el número de columnas de A coincíde con el número de filas de B. El resultado es una matriz de dimensión 4x4: número de filas de A y número de columnas de B
+C<-A%*%B 
+C
+
+mean(C[,1])
+sd(C[,1])
+
+# Notad que el elemento de la fila 2 y columna 3 de C es 42 y se obtiene de:
+
+C_2_3<-A[2, ]%*%B[,3] # de esta manera se extraen filas y columnas de una matriz
+C_2_3
+
+
+# multiplicación de un escalar por una matriz
+
+E<-5*C
+E
+
+
+#Solución de sistemas de ecuaciones lineales
+
+A<-matrix(c(1,7,-4,1,2,-2,5,1,-3,0,-2,-1,3,-5,1,2), ncol = 4, nrow = 4, byrow=T)
+A
+
+b<- c(1,2,3,-5)
+solve(A,b)
+
+det(A)
+
+
+#Matriz inversa
+
+N<-matrix(c(2,4,6,0,3,2,0,0,1),ncol=3,nrow = 3)
+Mi<-solve(N)
+N
+Mi
+N%*%Mi
+
+
+## Para ver mejor los resultados
+round(N%*%Mi,2)
+
+```
+
+
+## Ejemplo 2
+
+Ingresar y resolver sistemas de ecuaciones lineales.
+
+```{r}
+
+#Utilizar la siguiente librería, debe tenerla instalada.
+
+library(matlib)
+
+A<-matrix(c(1,-2,5,-7), ncol = 2, nrow = 2)
+b<- c(7,-5)
+showEqn(A, b)
+
+
+
+##Gráficar el sistema.
+A<-matrix(c(1,-2,5,-7), ncol = 2, nrow = 2)
+b<- c(7,-5)
+plotEqn(A,b, xlim=c(-10,0), labels=TRUE)
+
+
+
+##Encontrar la solución
+A<-matrix(c(1,-2,5,-7), ncol = 2, nrow = 2)
+b<- c(7,-5)
+
+Solve(A,b,verbose = TRUE, fractions = TRUE)
+
+```
+
+
+## Linealmente independientes
+```{r}
+
+library(matlib)
+C<-matrix(c(3,1,2,0,3,5,-2,5,7), ncol = 3, nrow = 3)
+v<- c(0,0,0)
+C
+v
+showEqn(C, v)
+Solve(C,v,verbose = TRUE, fractions = TRUE)
+
+
+#Linealmente dependientes
+C<-matrix(c(3,1,2,0,3,5,-6,-2,-4), ncol = 3, nrow = 3)
+v<- c(0,0,0)
+C
+v
+showEqn(C, v)
+Solve(C,v,verbose = TRUE, fractions = TRUE)
+
+## Una solución distinta de la trivial es 
+# $\lambda_3 = 2$ entonces $\lambda_1 = 4$, $\lambda_2 = 0$
+
+
+```
+
+
+
+
+
+
+
+##Bases de Espacios Vectoriales
+
+Los vectores 
+$\{(3,5), (-3,7) \}$ son una base para el E.V. $R^2$
+ para saber cómo el vector $(-11, 23)$ se puede escribir como combinación lineal de ellos, Se deben buscar escalares $x_1, x_2$, tales que $x_1(3,5)+x_2(-3,7)=(-11,23)$, lo cual equivale a resolver el sistema:
+$$ \left \{ \begin{array}{lcc}
+             3x_1-3x_2  &   =  & -11\\
+             5x_1+7x_2 & = & 23 
+             \end{array}
+   \right.
+  $$
+
+
+```{r}
+library(matlib)
+C<-matrix(c(3,5,-3,7), ncol = 2, nrow = 2)
+v<- c(-11,23)
+C
+v
+Solve(C,v,verbose = TRUE, fractions = TRUE)
+```
+
+
+En general, en $R^n$ para saber si $n$ vectores son una base, basta ver que la matriz formada al tomar los vectores como filas o columnas tiene un determinante distinto de cero
+
+##Ejemplo en 
+$R^5$
+
+Dado el conjunto de vectores $S=\{(2,1,0,3,-1), (-2,1,3,3,1), (3,-1,8,3,-1), (0,5,0,-3,-1), (7,2,-1,0,-4)\}$ Determinar si es una base en $R^5$
+
+
+```{r}
+M<-matrix(c(2,1,0,3,-1,-2,1,3,3,1,3,-1,8,3,-1,0,5,0,-3,-1,7,2,-1,0,-4), ncol = 5, nrow = 5)
+M
+det(M)
+
+```
+
+Si se quiere escribir el vector $(-5,3,-2,7,11)$ como combinación lineal de dicha base, se debe resolver el sistema como antes:
+
+```{r}
+M<-matrix(c(2,1,0,3,-1,-2,1,3,3,1,3,-1,8,3,-1,0,5,0,-3,-1,7,2,-1,0,-4), ncol = 5, nrow = 5)
+u<-c(-5,3,-2,7,11)
+showEqn(M, u)
+
+M
+
+Solve(M,u,verbose = TRUE, fractions = TRUE)
+N<-c(734/13,-1988/39,553/39,52/3,-1462/39)
+
+w<-M%*%N
+w
+
+
+
+```
+
+
+Si se quiere escribir el vector $u=(3,-2,7,11)$ como combinación lineal de la base $B_1=\{(1,0,3,-1), (1,3,3,1), (3,-1,3,-1), (0,5,0,-1)\}$ en $R^4$
+
+```{r}
+M<-matrix(c(1,0,3,-1,1,3,3,1, 3,-1,3,-1,0,5,0,-1), ncol = 4, nrow = 4)
+M
+det(M)
+u<-c(3,-2,7,11)
+
+showEqn(M, u)
+
+Solve(M,u,verbose = TRUE, fractions = TRUE)
+
+CuB1<-c(-3,5,1/3,-10/3)
+
+w<-M%*%CuB1
+w
+
+```
+
+También el conjunto $B_2=\{(5,-2,3,-1), (-1,0,3,-1), (4,-7,-3,7), (1,0,2,0)\}$ es una base en $R^4$, de modo que el vector $u=(3,-2,7,11)$ tiene una representación respecto de esta base:
+
+```{r}
+
+M1<-matrix(c(5,-2,3,-1,-1,0,3,-1,4,-7,-3,7,1,0,2,0), ncol = 4, nrow = 4)
+M1
+det(M1)
+u<-c(3,-2,7,11)
+
+showEqn(M1, u)
+
+Solve(M1,u,verbose = FALSE, fractions = TRUE) #FALSE hace que las operaciones de renglón no se muestren
+
+CuB2<-c(-86/33,-13/11,34/33,118/11)
+
+w1<-M1%*%CuB2
+w1
+
+```
+
+
+
+
+### Valores y vectores propios 
+
+```{r}
+
+# Lo primero que vamos a hacer es generar una matriz cuadrada de orden 4
+m4 <- matrix(c(2,3,4,-1,2,5,8,1,-2,-3,4,1,5,6,7,8),4,4,byrow=T)
+m4
+# Calculamos su traspuesta
+B<-t(m4)
+B
+# Extraemos su diagonal principal
+diag(m4)
+# Realizamos las primeras operaciones con matrices
+m4 + t(m4)
+m4 - 2*t(m4)
+# Multiplicamos matrices
+S<-m4 %*% t(m4)
+S
+# Calculamos la inversa de una matriz
+In<-round(solve(m4),2)
+In
+
+# Para presentarla como fracciones 
+library(MASS)
+
+fractions(In)
+
+
+#producto interno de vectores
+v1<-c(1,1,1,1)
+v2<-c(3,2,5,6)
+pro<-v1%*%v2
+pro
+
+
+# Y verificamos que es la inversa de la matriz
+round(m4%*%solve(m4),2)
+round(solve(m4) %*% m4,2)
+
+
+# Calculamos su determinante
+det(m4)
+det(t(m4))
+det(m4%*%solve(m4))
+
+
+
+# Calculamos sus autovalores y autovectores
+eigen(m4)
+
+str(eigen(m4))
+round(eigen(m4)$values,2)
+round(eigen(m4)$vectors,2)
+
+
+# Calculamos los autovalores y autovectores de una matriz simétrica
+MSi <- matrix(c(2,0,3,0,1,4,3,4,-1),3,3,byrow=T)
+MSi
+Tr<-t(MSi)
+Tr
+
+eigen(MSi)
+
+lp<-round(eigen(MSi)$values,2)
+lp
+vp<-round(eigen(MSi)$vectors,2)
+vp
+# Comprobación de la definición de valores propios
+lp[1]*vp[,1]
+
+MSi%*%vp[,1]
+
+## La diferencia es debido al redondeo
+
+# Resultados sin aproximar:
+lp<-eigen(MSi)$values
+lp
+vp<-eigen(MSi)$vectors
+vp
+
+# Comprobación sin aproximar 
+lp[1]*vp[,1]
+
+MSi%*%vp[,1]
+
+##  OJO: LOS VECTORES PROPIOS SON PRESENTADOS COMO COLUMNAS 
+
+```
+
+
+
+
+###Datos reales
+
+```{r}
+
+#Cambiar fichero
+setwd("E:/metodosAvanzados/metodosAvanzados")
+
+library(FactoMineR)
+library(MASS)
+
+#Cambiar fichero
+europa<-read.csv('Data/ConsumoEuropa.csv',header=TRUE,sep=';',dec=',',row.names=1)
+
+dim(europa)
+head(europa)
+tail(europa)
+  
+
+#Matriz centrada y reducida
+datoscenter<-as.data.frame(scale(europa, center = TRUE, scale = TRUE))
+head(datoscenter)
+summary(datoscenter)
+
+correlacion<-cor(europa)
+correlacion
+class(correlacion)
+det(correlacion)
+
+##Calcular los valores y vectores propios 
+eigen(correlacion)
+
+lp<-round(eigen(correlacion)$values,2)
+lp
+vp<-round(eigen(correlacion)$vectors,2)
+vp
+
+
+## Comparar al realizar un análisis de componentes principales sobre los datos europa
+
+res<-PCA(europa, scale.unit=T, ncp=9, graph = FALSE)
+res
+res$var
+res$eig
+
+
+```

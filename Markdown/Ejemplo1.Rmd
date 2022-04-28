@@ -1,0 +1,134 @@
+---
+title: "Metodos Estadisticos Avanzados"
+author: "Luis Edmundo Ramírez"
+date: '2022-04-13'
+output: html_document
+---
+```{r}
+library(matlib)
+knitr::include_graphics("E:/metodosAvanzados/metodosAvanzados/Outputs/uca.JPG")
+```
+
+```{r setup, include=FALSE}
+knitr:: opts_chunk$set(echo=TRUE)
+```
+
+```{r}
+#Ejemplo 1
+#Introduciendo un vector:
+
+V=c(22,4,-8,5,9)
+V
+
+#La clase de objeto es? -> Numérico
+class(V)
+#Longitud del vector -> Longitud = 5
+length(V)
+
+U<-c(22,4,-8,5,9)
+U
+
+#Manera lógica de preguntar Vector V=U ?? TRUE or FALSE
+V==U
+```
+
+```{r}
+#Ejemplo 2
+#Asignando matrices
+#A vector del 1-12 con 4 filas y 3 columnas
+A<-matrix(c(1:12), nrow = 4, ncol = 3)
+A
+#Dimensión de la matriz
+dim(A)
+```
+
+
+```{r}
+#Vector del 1-120 (Los va llenando por filas)
+vecto<-c(1:120)
+vecto
+```
+
+
+```{r}
+#B matriz establecida de números con 3 filas y 4 columnas
+#Por default crea la matriz por columna
+B<-matrix(c(0,2,0,3,4,3,1,5,1,0,0,1), nrow = 3, ncol = 4)
+B
+
+#Dimensión de la matriz
+dim(B)
+
+#Longitud
+length(B)
+
+#Matriz transpuesta
+tra<-t(B)
+tra
+
+#Producto AxB
+C<-A%*%B
+C
+
+```
+
+```{r}
+#Producto escalar
+dC<-2*C
+dC
+
+```
+
+```{r}
+#Suma de matrices
+M<-C+dC
+M
+
+#Error al sumar matrices de distinta dimensión
+#C+B
+```
+
+
+```{r}
+#Gráfica del Sistema de Ecuaciones
+A<-matrix(c(1,-2,5,-7),ncol = 2, nrow = 2 )
+b<- c(7,-5)
+
+plotEqn(A,b,xlim=c(-10,0), labels=TRUE)
+```
+
+```{r}
+##Ejemplo 2
+#Ingresar y resolver sistemas de ecuaciones lineales
+
+A<-matrix(c(1,-2,5,-7),ncol = 2, nrow = 2 )
+b<- c(7,-5)
+#Muestra Sistema de Ec.
+showEqn(A,b)
+```
+
+
+##Ejemplo de Código LATEX: Intersección de subespacios en $R^3$
+En $R^3$ sea $H_1=\{(x,y,z):2x-y-z=0\}$ y $H_2=\{(x,y,z):x+2y+3z=0\}$.
+Entonces $H_1$ y $H_2$ consisten en vectores que se encuentran sobre planos que pasan por el origen y son, según teoremas vistos en clase, subespacios de $R^3$.
+Hallar $H_1 \cap H_2$
+
+Se debe resolver el sistema:
+$$ \left \{ \begin{array}{lcc}
+          x + 2y + 3z & = & 0 \\
+          2x - y - z & = & 0
+          \end {array}
+    \right.
+    $$
+}
+
+```{r}
+#Resolución de un S.Ec.Lineal (3x2)
+C<-matrix(c(1,2,2,-1,3,-1),ncol = 3, nrow = 2)
+v<-c(0,0)
+C
+v
+Solve(C,v,verbose = TRUE,fractions = TRUE)
+```
+
+
